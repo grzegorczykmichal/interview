@@ -1,6 +1,6 @@
 import { fetchData } from "../src/fetchData";
 
-describe.skip("fetchData", () => {
+describe("fetchData", () => {
   it.each`
     key           | expectedName        | expectedBirthDate
     ${"OL26320A"} | ${"J.R.R. Tolkien"} | ${"3 January 1892"}
@@ -16,16 +16,15 @@ describe.skip("fetchData", () => {
   );
 
   it.each`
-    key              | expectedName                    | expectedNumberOfPages
-    ${"OL14933414W"} | ${"The Fellowship of the Ring"} | ${1193}
-    ${"OL893415W"}   | ${"Dune"}                       | ${undefined}
+    key              | expectedName
+    ${"OL14933414W"} | ${"The Fellowship of the Ring"}
+    ${"OL893415W"}   | ${"Dune"}
   `(
-    "Should return book title ($expectedName, pages $expectedNumberOfPages)",
-    async ({ key, expectedName, expectedNumberOfPages }) => {
+    "Should return book title ($expectedName)",
+    async ({ key, expectedName }) => {
       const book = await fetchData("works", key);
 
       expect(book.title).toEqual(expectedName);
-      expect(book.number_of_pages).toEqual(expectedNumberOfPages);
     }
   );
 });
